@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmoxIQ - Consumer Price Dashboard</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="logo.svg" alt="AmoxIQ Logo" class="logo">
+            </div>
+        </header>
+        
+        <div class="tab-bar">
+            <div class="tab-item active">Home Econ</div>
+            <div class="tab-item">API Status</div>
+            <div class="tab-item disabled">Finance</div>
+            <div class="tab-item disabled">Polling</div>
+            <div class="tab-item disabled">Politics</div>
+        </div>
+        
+        <div class="content-area">
+            <!-- Home Econ Content -->
+            <div id="home-econ-content" class="dashboard-page active">
+                <h2 class="dashboard-title">Consumer Price Dashboard</h2>
+                <div class="last-updated-info">Last data refresh: <span id="global-update-time">Loading...</span></div>
+                <div class="data-source-info">Data from: Bureau of Labor Statistics, EIA, USDA</div>
+                <div class="axolotl-mascot"></div>
+                
+                <div class="row g-4 item-grid">
+                <!-- Row 1: First 4 Items -->
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-egg"></i>
+                        </div>
+                        <h5 class="card-title">Eggs (Dozen)</h5>
+                        <p class="price-value" id="egg-price">$3.29</p>
+                        <p class="price-change negative" id="egg-change">-0.05 (-1.5%)</p>
+                        <div class="mini-chart" id="egg-chart"></div>
+                        <p class="last-updated">Last updated: <span id="egg-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="egg-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-prescription-bottle"></i>
+                        </div>
+                        <h5 class="card-title">Milk (Gallon)</h5>
+                        <p class="price-value" id="milk-price">$4.15</p>
+                        <p class="price-change positive" id="milk-change">+0.08 (+1.9%)</p>
+                        <div class="mini-chart" id="milk-chart"></div>
+                        <p class="last-updated">Last updated: <span id="milk-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="milk-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <h5 class="card-title">Bread (Loaf)</h5>
+                        <p class="price-value" id="bread-price">$2.89</p>
+                        <p class="price-change negative" id="bread-change">-0.02 (-0.7%)</p>
+                        <div class="mini-chart" id="bread-chart"></div>
+                        <p class="last-updated">Last updated: <span id="bread-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="bread-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">EIA API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-gas-pump"></i>
+                        </div>
+                        <h5 class="card-title">Gasoline (Gal)</h5>
+                        <p class="price-value" id="gas-price">$3.45</p>
+                        <p class="price-change positive" id="gas-change">+0.12 (+3.6%)</p>
+                        <div class="mini-chart" id="gas-chart"></div>
+                        <p class="last-updated">Last updated: <span id="gas-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="gas-source"><span class="api-status"></span>EIA</span></p>
+                    </div>
+                </div>
+                
+                <!-- Row 2: Additional 4 Items -->
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">USDA API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <h5 class="card-title">Chicken (lb)</h5>
+                        <p class="price-value" id="chicken-price">$2.89</p>
+                        <p class="price-change positive" id="chicken-change">+0.17 (+6.2%)</p>
+                        <div class="mini-chart" id="chicken-chart"></div>
+                        <p class="last-updated">Last updated: <span id="chicken-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="chicken-source"><span class="api-status"></span>USDA</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <h5 class="card-title">Coffee (Pound)</h5>
+                        <p class="price-value" id="coffee-price">$8.75</p>
+                        <p class="price-change positive" id="coffee-change">+0.45 (+5.4%)</p>
+                        <div class="mini-chart" id="coffee-chart"></div>
+                        <p class="last-updated">Last updated: <span id="coffee-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="coffee-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-cheese"></i>
+                        </div>
+                        <h5 class="card-title">Cheese (lb)</h5>
+                        <p class="price-value" id="cheese-price">$6.49</p>
+                        <p class="price-change positive" id="cheese-change">+0.34 (+5.5%)</p>
+                        <div class="mini-chart" id="cheese-chart"></div>
+                        <p class="last-updated">Last updated: <span id="cheese-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="cheese-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="price-card text-center">
+                        <div class="api-badge">BLS API</div>
+                        <div class="icon-container">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h5 class="card-title">Apparel</h5>
+                        <p class="price-value" id="apparel-price">+4.2%</p>
+                        <p class="price-change positive" id="apparel-change">Yearly Increase</p>
+                        <div class="mini-chart" id="apparel-chart"></div>
+                        <p class="last-updated">Last updated: <span id="apparel-update-time">Loading...</span></p>
+                        <p class="source">Source: <span id="apparel-source"><span class="api-status"></span>BLS</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Status Content -->
+            <div id="api-status-content" class="dashboard-page">
+                <h2 class="dashboard-title">API Status Dashboard</h2>
+                
+                <div class="row g-4">
+                    <!-- BLS API Status -->
+                    <div class="col-md-4">
+                        <div class="price-card text-center">
+                            <div class="api-badge">BLS API</div>
+                            <div class="icon-container">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h5 class="card-title">Bureau of Labor Statistics API</h5>
+                            <p class="status-value" id="bls-status">Checking...</p>
+                            <div class="api-details">
+                                <p>Series IDs: <span id="bls-series-count">7</span></p>
+                                <p>Last Updated: <span id="bls-last-updated">-</span></p>
+                                <p>Response Time: <span id="bls-response-time">-</span></p>
+                            </div>
+                            <button class="test-api-btn" data-api="BLS">Test Connection</button>
+                        </div>
+                    </div>
+                    
+                    <!-- EIA API Status -->
+                    <div class="col-md-4">
+                        <div class="price-card text-center">
+                            <div class="api-badge">EIA API</div>
+                            <div class="icon-container">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h5 class="card-title">Energy Information Administration API</h5>
+                            <p class="status-value" id="eia-status">Checking...</p>
+                            <div class="api-details">
+                                <p>Series IDs: <span id="eia-series-count">1</span></p>
+                                <p>Last Updated: <span id="eia-last-updated">-</span></p>
+                                <p>Response Time: <span id="eia-response-time">-</span></p>
+                            </div>
+                            <button class="test-api-btn" data-api="EIA">Test Connection</button>
+                        </div>
+                    </div>
+                    
+                    <!-- USDA API Status -->
+                    <div class="col-md-4">
+                        <div class="price-card text-center">
+                            <div class="api-badge">USDA API</div>
+                            <div class="icon-container">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h5 class="card-title">USDA APIs</h5>
+                            <p class="status-value" id="usda-status">Checking...</p>
+                            <div class="api-details">
+                                <p>Endpoints: <span id="usda-series-count">2</span></p>
+                                <p>Last Updated: <span id="usda-last-updated">-</span></p>
+                                <p>Response Time: <span id="usda-response-time">-</span></p>
+                            </div>
+                            <button class="test-api-btn" data-api="USDA">Test Connection</button>
+                        </div>
+                    </div>
+                    
+                    <!-- API Configuration -->
+                    <div class="col-12 mt-4">
+                        <div class="price-card">
+                            <h5 class="card-title">API Configuration</h5>
+                            <div class="api-config-form">
+                                <div class="form-group mb-3">
+                                    <label for="bls-api-key">BLS API Key (Optional)</label>
+                                    <input type="text" id="bls-api-key" class="form-control" placeholder="Enter BLS API Key">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="eia-api-key">EIA API Key (Required)</label>
+                                    <input type="text" id="eia-api-key" class="form-control" placeholder="EIA API Key found in email" value="NOegn6r7yoDo4tAGqoDe4aCRXTJv026DLod7m7I">
+                                    <small class="text-success">✓ EIA API key is configured</small>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="usda-api-key">USDA API Key (Required)</label>
+                                    <input type="text" id="usda-api-key" class="form-control" placeholder="Enter USDA API Key">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="testing-mode">
+                                    <label class="form-check-label" for="testing-mode">Enable Testing Mode (Use Mock Data)</label>
+                                </div>
+                                <button id="save-api-config" class="btn btn-primary">Save Configuration</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2025 AmoxIQ - Making economic data accessible to everyone</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

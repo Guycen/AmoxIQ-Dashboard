@@ -1,0 +1,706 @@
+/* AmoxIQ Dashboard - Enhanced CSS
+ * Modern, clean styling for price tracking dashboard
+ */
+
+:root {
+    /* Core color palette */
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --secondary: #EC4899;
+    --secondary-light: #F472B6;
+    --secondary-dark: #DB2777;
+    
+    /* Background colors */
+    --bg-dark: #111827;
+    --bg-card: #1F2937;
+    --card-hover: #2D3748;
+    
+    /* Text colors */
+    --text-light: #F3F4F6;
+    --text-muted: #9CA3AF;
+    --text-bright: #FFFFFF;
+    
+    /* Status colors - REVERSED for consumer perspective */
+    --price-increase: #EF4444; /* Red for price increases (bad for consumers) */
+    --price-increase-light: #FEE2E2;
+    --price-decrease: #10B981; /* Green for price decreases (good for consumers) */
+    --price-decrease-light: #D1FAE5;
+    
+    /* UI elements */
+    --border-radius: 12px;
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Animations */
+    --transition-speed: 0.3s;
+}
+
+/* Base styles */
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Typography enhancements */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--text-bright);
+}
+
+/* Dashboard container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+    overflow: auto;
+}
+
+/* Header and Logo */
+.main-header {
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo-container {
+    max-width: 240px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Tab navigation */
+.tab-bar {
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+    display: flex;
+    padding: 0 1rem;
+    z-index: 50;
+    position: sticky;
+    top: 0;
+}
+
+.tab-item {
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.tab-item.active {
+    color: var(--primary-light);
+    border-bottom: 2px solid var(--primary);
+}
+
+.tab-item:hover:not(.disabled):not(.active) {
+    color: var(--text-light);
+    background-color: rgba(99, 102, 241, 0.1);
+}
+
+.tab-item.disabled {
+    color: rgba(156, 163, 175, 0.5);
+    cursor: not-allowed;
+}
+
+/* Content area */
+.content-area {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--bg-dark);
+    position: relative;
+}
+
+.content-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content-area::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+.content-area::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 20px;
+}
+
+/* Dashboard title and info */
+.dashboard-title {
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-bright);
+    position: relative;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.dashboard-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 3px;
+}
+
+.last-updated-info,
+.data-source-info {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.last-updated-info {
+    font-weight: 500;
+}
+
+/* Dashboard Pages */
+.dashboard-page {
+    display: none;
+}
+
+.dashboard-page.active {
+    display: block;
+}
+
+/* Price cards */
+.price-card {
+    background: linear-gradient(135deg, var(--bg-card), rgba(31, 41, 55, 0.8));
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    z-index: 10;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.price-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.price-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--card-shadow-hover);
+    background: var(--card-hover);
+}
+
+.price-card:hover::before {
+    opacity: 1;
+}
+
+/* Card title - ensure high contrast */
+.price-card .card-title,
+.price-card h5 {
+    color: var(--text-bright) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Price values with high visibility */
+.price-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    text-align: center;
+    color: var(--text-bright) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Metadata with lower emphasis */
+.last-updated, 
+.source {
+    font-size: 0.75rem;
+    color: var(--text-muted) !important;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.price-change {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    margin: 0.5rem auto;
+}
+
+.price-change.positive {
+    background-color: var(--price-increase-light);
+    color: var(--price-increase);
+}
+
+.price-change.negative {
+    background-color: var(--price-decrease-light);
+    color: var(--price-decrease);
+}
+
+.icon-container {
+    font-size: 1.75rem;
+    color: var(--primary-light);
+    margin-bottom: 1rem;
+    text-align: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.price-card:hover .icon-container {
+    transform: scale(1.1);
+    color: var(--secondary-light);
+}
+
+/* API badge */
+.api-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+    background-color: rgba(99, 102, 241, 0.2);
+    color: var(--primary-light);
+    font-weight: 500;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: all var(--transition-speed) ease;
+}
+
+.price-card:hover .api-badge {
+    background-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Axolotl mascot */
+.axolotl-mascot {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 60px;
+    height: 60px;
+    background-image: url('https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.6.3/dist/svg/happy.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: hue-rotate(230deg) brightness(1.3);
+    opacity: 0.8;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    z-index: 50;
+    animation: float 6s ease-in-out infinite;
+}
+
+.axolotl-mascot:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Tooltip styles */
+.axolotl-tooltip {
+    position: absolute;
+    background: rgba(31, 41, 55, 0.95);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    width: 220px;
+    bottom: 90px;
+    right: 20px;
+    font-size: 0.875rem;
+    box-shadow: var(--card-shadow);
+    opacity: 0;
+    transition: all var(--transition-speed) ease;
+    pointer-events: none;
+    border: 1px solid var(--primary);
+    z-index: 101;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: all var(--transition-speed) ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg);
+    background: var(--secondary);
+}
+
+/* Notification styles */
+.notification-container {
+    position: fixed;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.notification {
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    transform: translateX(-120%);
+    transition: transform var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    animation: slide-in-right var(--transition-speed) forwards;
+}
+
+@keyframes slide-in-right {
+    from { transform: translateX(-120%); }
+    to { transform: translateX(0); }
+}
+
+/* Item grid with better spacing */
+.item-grid {
+    width: 100%;
+    padding-bottom: 2rem;
+}
+
+/* Animation for price changes */
+@keyframes pulse-price {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.price-updated {
+    animation: pulse-price 0.5s ease;
+}
+
+/* Light Mode Styles */
+body.light-mode {
+    --bg-dark: #F3F4F6;
+    --bg-card: #FFFFFF;
+    --card-hover: #F9FAFB;
+    --text-light: #1F2937;
+    --text-muted: #6B7280;
+    --text-bright: #111827;
+}
+
+body.light-mode .price-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .dashboard-container {
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+}
+
+/* Data visualization enhancements */
+.mini-chart {
+    height: 40px;
+    width: 100%;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.mini-chart-line {
+    stroke: var(--primary);
+    stroke-width: 2;
+    fill: none;
+}
+
+.mini-chart-area {
+    fill: url(#gradient);
+    opacity: 0.2;
+}
+
+/* API Status Indicator */
+.api-status {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    background-color: var(--text-muted);
+}
+
+.api-status.success {
+    background-color: var(--price-decrease);
+}
+
+.api-status.error {
+    background-color: var(--price-increase);
+}
+
+.api-status.loading {
+    background-color: var(--primary);
+    animation: pulse 1s infinite;
+}
+
+/* Footer */
+.main-footer {
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(75, 85, 99, 0.3);
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-content p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.subscription-info {
+    font-weight: 500;
+    color: var(--primary-light) !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .content-area {
+        padding: 1rem;
+    }
+    
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    
+    .price-card {
+        padding: 1rem;
+    }
+    
+    .price-value {
+        font-size: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 0.875rem;
+    }
+    
+    .icon-container {
+        font-size: 1.5rem;
+    }
+    
+    .main-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .logo-container {
+        max-width: 180px;
+        height: 50px;
+    }
+}
+
+/* API Status Page */
+.status-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    display: inline-block;
+}
+
+.status-value.success {
+    background-color: var(--price-decrease-light);
+    color: var(--price-decrease);
+}
+
+.status-value.error {
+    background-color: var(--price-increase-light);
+    color: var(--price-increase);
+}
+
+.status-value.loading {
+    background-color: rgba(99, 102, 241, 0.2);
+    color: var(--primary-light);
+    animation: pulse 1s infinite;
+}
+
+.api-details {
+    margin: 1rem 0;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+.api-details p {
+    margin: 0.375rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.test-api-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.test-api-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.form-group small.text-success {
+    color: var(--price-decrease) !important;
+    font-weight: 500;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.form-group small.text-error {
+    color: var(--price-increase) !important;
+    font-weight: 500;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.api-config-form {
+    padding: 1rem;
+}
+
+.form-control {
+    background-color: rgba(31, 41, 55, 0.6);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    color: var(--text-light);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    margin-top: 0.25rem;
+}
+
+.form-control:focus {
+    background-color: rgba(31, 41, 55, 0.8);
+    border-color: var(--primary);
+    color: var(--text-bright);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-check-input {
+    background-color: rgba(31, 41, 55, 0.6);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+@media (max-width: 576px) {
+    .tab-bar {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    
+    .tab-bar::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .tab-item {
+        padding: 0.75rem 1rem;
+        white-space: nowrap;
+    }
+    
+    .notification {
+        max-width: 85vw;
+    }
+}
